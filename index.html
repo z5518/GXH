@@ -1,266 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitation Link Generator</title>
+  <meta name="viewport" content="width=800, user-scalable=no" />
+  <title>登录/注册</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: #f7f7f7;
+      font-family: "Microsoft YaHei", sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
-    #formSection, #resultSection {
-      background: #fff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+    .login-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      min-width: 320px;
     }
 
-    h1 {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 20px;
+    .login-container h2 {
       text-align: center;
+      margin-bottom: 20px;
     }
 
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    input, button {
+    .login-container input {
       width: 100%;
-      padding: 12px;
+      padding: 10px 12px;
       margin: 10px 0;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-
-    input {
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 5px;
+      box-sizing: border-box;
     }
 
-    button {
-      background-color: #4CAF50;
+    .btn {
+      background: #28a745;
       color: white;
       border: none;
+      padding: 10px 12px;
+      border-radius: 5px;
       cursor: pointer;
-      border-radius: 4px;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    #output {
+      width: 100%;
       margin-top: 10px;
-      word-break: break-word;
-      background: #fff;
-      padding: 10px;
-      border: 1px solid #ddd;
       font-size: 16px;
     }
 
-    .gray-note {
-      color: gray;
-      font-weight: normal;
-      font-size: 0.9em;
+    .btn:hover {
+      background: #218838;
+    }
+
+    .switch-links {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .switch-links a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 6px;
+      font-size: 14px;
+    }
+
+    .switch-links a:hover {
+      text-decoration: underline;
     }
 
     .hidden {
       display: none;
     }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .share-section {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .share-section p {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .share-icons {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .share-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 60px;
-    }
-
-    .share-item a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background-color: #eee;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .share-item a:hover {
-      background-color: #ddd;
-    }
-
-    .share-item img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .share-label {
-      font-size: 10px;
-      color: #444;
-      margin-top: 4px;
-      text-align: center;
-    }
-
-    .footer-note {
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-      margin-top: 20px;
-      line-height: 1.6;
-    }
   </style>
 </head>
 <body>
-
-  <div id="formSection">
-    <h1>✨Create your personalized invitation link page</h1>
-
-    <label>
-      Your WhatsApp number
-      <span class="gray-note">.</span>
-    </label>
-    <input type="text" id="phone" placeholder="Fill in your WahtsApp number ..." />
-
-    <label>Paste your invitation link here:</label>
-    <input type="text" id="codeInput" placeholder="Paste your invitation link here ..." />
-
-    <button onclick="generateLink()">Start Creating</button>
-  </div>
-
-  <div id="resultSection" class="hidden">
-    <input type="text" id="output" readonly />
-
-    <div class="button-group">
-      <button onclick="copyLink()">Copy</button>
-      <button onclick="resetForm()">Create Again</button>
-    </div>
-
-    <div class="share-section">
-      <p>🔽 Tap an icon to share 🔽</p>
-      <div class="share-icons">
-        <div class="share-item">
-          <a id="waShare" target="_blank" title="WhatsApp">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg" alt="WhatsApp" />
-          </a>
-          <div class="share-label">WhatsApp</div>
-        </div>
-        <div class="share-item">
-          <a id="tgShare" target="_blank" title="Telegram">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/telegram.svg" alt="Telegram" />
-          </a>
-          <div class="share-label">Telegram</div>
-        </div>
-        <div class="share-item">
-          <a id="fbShare" target="_blank" title="Facebook">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/facebook.svg" alt="Facebook" />
-          </a>
-          <div class="share-label">Facebook</div>
-        </div>
-      </div>
+  <div class="login-container">
+    <h2 id="formTitle">登录</h2>
+    <input id="email" type="text" placeholder="账号" />
+    <input id="password" type="password" placeholder="密码" />
+    <input id="newPassword" type="password" placeholder="上方输入旧密码，此处输入你要修改的新密码" class="hidden" />
+    <button class="btn" id="authBtn">登录</button>
+    <button class="btn hidden" id="changeBtn">确认修改密码</button>
+    <div class="switch-links">
+      <a href="javascript:void(0)" id="switchToRegister">没有账号？点击注册</a>
+      <a href="javascript:void(0)" class="hidden" id="switchToLogin">已有账号？登录</a>
+      <a href="javascript:void(0)" class="hidden" id="switchToChange">修改密码</a>
     </div>
   </div>
 
-  <div class="footer-note">
-    Create your own personalized invitation link. Others can learn more about Boralex and how to join. They can also register and contact you directly through this link.
-  </div>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  <script>
-    function extractCode(input) {
-      const match = input.match(/code=([a-zA-Z0-9]+)/);
-      return match ? match[1] : input.trim();
+    const supabase = createClient(
+      "https://tgybhckhjbmeafruvokc.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRneWJoY2toamJtZWFmcnV2b2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3ODc5ODQsImV4cCI6MjA2NjM2Mzk4NH0.OWNrddp4hhZRSaCpH4NGRtoRB54hUcWDbfMEhi9Adfg"
+    );
+
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const newPasswordInput = document.getElementById("newPassword");
+    const authBtn = document.getElementById("authBtn");
+    const changeBtn = document.getElementById("changeBtn");
+
+    const switchToRegister = document.getElementById("switchToRegister");
+    const switchToLogin = document.getElementById("switchToLogin");
+    const switchToChange = document.getElementById("switchToChange");
+
+    let mode = "login";
+
+    function getFullEmail() {
+      let input = emailInput.value.trim();
+      return input.includes("@") ? input : input + "@gmail.com";
     }
 
-    function formatPhoneNumber(phone) {
-      const digits = phone.replace(/\D/g, '');
-      if (digits.length === 10 && digits.startsWith('0')) {
-        return '260' + digits.slice(1);
-      } else if (digits.length === 9) {
-        return '260' + digits;
-      } else if (digits.length === 12 && digits.startsWith('260')) {
-        return digits;
-      } else {
-        throw new Error('Please enter your correct WhatsApp number');
-      }
+    function updateFormTitle() {
+      document.getElementById("formTitle").innerText =
+        mode === "login" ? "登录" :
+        mode === "register" ? "注册" :
+        "修改密码";
+
+      authBtn.textContent = mode === "register" ? "注册" : "登录";
     }
 
-    function generateLink() {
-      const phoneRaw = document.getElementById('phone').value;
-      const codeRaw = document.getElementById('codeInput').value.trim();
+    function show(modeToShow) {
+      mode = modeToShow;
+      updateFormTitle();
 
-      try {
-        if (!phoneRaw || !codeRaw) {
-          alert('Please paste your own Boralex invite link and your WhatsApp number');
+      newPasswordInput.classList.toggle("hidden", mode !== "change");
+      authBtn.classList.toggle("hidden", mode === "change");
+      changeBtn.classList.toggle("hidden", mode !== "change");
+
+      switchToRegister.classList.toggle("hidden", mode !== "login");
+      switchToLogin.classList.toggle("hidden", mode === "login");
+      switchToChange.classList.toggle("hidden", mode !== "login");
+
+      emailInput.value = '';
+      passwordInput.value = '';
+      newPasswordInput.value = '';
+    }
+
+    switchToRegister.onclick = () => show("register");
+    switchToLogin.onclick = () => show("login");
+    switchToChange.onclick = () => show("change");
+
+    authBtn.onclick = async () => {
+      const email = getFullEmail();
+      const password = passwordInput.value.trim();
+      if (!email || !password) return alert("请输入账号和密码");
+
+      if (mode === "login") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          if (error.message === "Invalid login credentials") {
+            alert("账号或密码错误，请重新输入");
+          } else if (error.message === "User not found") {
+            alert("该账号不存在，请注册");
+          } else {
+            alert("登录失败：" + error.message);
+          }
           return;
         }
-
-        const phone = formatPhoneNumber(phoneRaw);
-        const code = extractCode(codeRaw);
-        const finalLink = `https://al006.vercel.app?contact=${phone}&code=${code}`;
-        const fullMessage = `${finalLink}\n\nYou can click this link to register a Boralex account or learn more about Boralex. It's a legitimate company that is government-approved and pays taxes legally. I work with Boralex myself and earn a stable income every day.`;
-
-        document.getElementById('output').value = finalLink;
-
-        document.getElementById('waShare').href = `https://wa.me/?text=${encodeURIComponent(fullMessage)}`;
-        document.getElementById('tgShare').href = `https://t.me/share/url?url=${encodeURIComponent(finalLink)}&text=${encodeURIComponent("You can click this link to register a Boralex account or learn more about Boralex. It's a legitimate company that is government-approved and pays taxes legally. I work with Boralex myself and earn a stable income every day.")}`;
-        document.getElementById('fbShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(finalLink)}`;
-
-        document.getElementById('formSection').classList.add('hidden');
-        document.getElementById('resultSection').classList.remove('hidden');
-      } catch (error) {
-        alert(error.message);
+        window.location.href = "main.html";
+      } else {
+        const { error } = await supabase.auth.signUp({ email, password });
+        if (error) {
+          if (error.message.includes("User already registered")) {
+            alert("该账号已被注册，请直接登录");
+          } else if (error.message.includes("Password should")) {
+            alert("密码太短，至少 6 位");
+          } else if (error.message.includes("Invalid email address")) {
+            alert("邮箱格式无效");
+          } else {
+            alert("注册失败：" + error.message);
+          }
+          return;
+        }
+        alert("注册成功，请登录");
+        show("login");
       }
-    }
+    };
 
-    function copyLink() {
-      const link = document.getElementById('output').value;
-      const message = `${link}\n\nYou can click this link to register a Boralex account or learn more about Boralex. It's a legitimate company that is government-approved and pays taxes legally. I work with Boralex myself and earn a stable income every day.`;
-      navigator.clipboard.writeText(message)
-        .then(() => alert('Copied successfully!'))
-        .catch(() => alert('Copy failed. Please copy manually.'));
-    }
+    changeBtn.onclick = async () => {
+      const email = getFullEmail();
+      const password = passwordInput.value.trim();
+      const newPassword = newPasswordInput.value.trim();
+      if (!email || !password || !newPassword) return alert("请填写完整信息");
 
-    function resetForm() {
-      document.getElementById('phone').value = '';
-      document.getElementById('codeInput').value = '';
-      document.getElementById('output').value = '';
-      document.getElementById('formSection').classList.remove('hidden');
-      document.getElementById('resultSection').classList.add('hidden');
-    }
+      const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+      if (loginError) {
+        alert("登录验证失败：" + loginError.message);
+        return;
+      }
+
+      const { error: changeError } = await supabase.auth.updateUser({ password: newPassword });
+      if (changeError) {
+        if (changeError.message.includes("Password should")) {
+          alert("新密码太短，至少 6 位");
+        } else {
+          alert("修改失败：" + changeError.message);
+        }
+        return;
+      }
+
+      alert("密码修改成功，请重新登录");
+      show("login");
+    };
+
+    show("login");
   </script>
 </body>
 </html>
